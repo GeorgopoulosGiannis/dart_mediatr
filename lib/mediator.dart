@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mediatr/src/behaviours/i_pipeline_behaviour.dart';
 
 import 'src/internals/failure.dart';
 import 'src/internals/i_domain_event.dart';
@@ -125,3 +126,18 @@ class Mediator {
   List<FuncEventHandler> _getFuncHandlersFor<E extends IDomainEvent>() =>
       eventFuncHandler[E] ?? [];
 }
+
+class LoggingBehaviour extends IPipelineBehaviour {
+  @override
+  Future proccess(IRequest request, RequestHandlerDelegate next) {
+    print(request);
+    return next(request);
+  }
+}
+
+final mediator = Mediator(
+  Pipeline()
+    ..addMiddleware(
+      LoggingBehaviour(),
+    ),
+);
