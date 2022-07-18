@@ -126,18 +126,3 @@ class Mediator {
   List<FuncEventHandler> _getFuncHandlersFor<E extends IDomainEvent>() =>
       eventFuncHandler[E] ?? [];
 }
-
-class LoggingBehaviour extends IPipelineBehaviour {
-  @override
-  Future proccess(IRequest request, RequestHandlerDelegate next) {
-    print(request);
-    return next(request);
-  }
-}
-
-final mediator = Mediator(
-  Pipeline()
-    ..addMiddleware(
-      LoggingBehaviour(),
-    ),
-);
