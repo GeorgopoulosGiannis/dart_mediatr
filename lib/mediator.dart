@@ -18,6 +18,8 @@ export 'src/internals/i_event_handler.dart';
 export 'src/internals/i_query.dart';
 export 'src/internals/i_request.dart';
 export 'src/internals/i_request_handler.dart';
+export 'src/internals/pipeline.dart';
+export 'src/internals/failure.dart';
 
 typedef HandlerCreator<T> = T Function();
 typedef FuncEventHandler<T extends IDomainEvent> = FutureOr<void> Function(
@@ -25,9 +27,11 @@ typedef FuncEventHandler<T extends IDomainEvent> = FutureOr<void> Function(
 
 typedef UnsubscribeFunc = void Function();
 typedef RunnerGuard = Failure Function(dynamic Function());
+typedef ErrorHandler = Failure? Function(Exception e);
 
 class Mediator {
   final Pipeline pipeline;
+  final ErrorHandler? errorHandler;
 
   @visibleForTesting
   final handlers = <Type, HandlerCreator>{};
@@ -39,8 +43,9 @@ class Mediator {
   final eventFuncHandler = <Type, List<FuncEventHandler>>{};
 
   Mediator(
-    this.pipeline,
-  );
+    this.pipeline, {
+    this.errorHandler,
+  });
 
   UnsubscribeFunc subscribeWithFunc<E extends IDomainEvent>(
       FutureOr<void> Function(IDomainEvent event) func) {
@@ -91,12 +96,13 @@ class Mediator {
     try {
       final result = await pipeline.passThrough(request, handler);
       return Right(result);
-    } catch (e) {
+    } on Exception catch (e) {
       return Left(
-        RequestFailure(
-          e.toString(),
-          request.toString(),
-        ),
+        errorHandler?.call(e) ??
+            RequestFailure(
+              e.toString(),
+              request.toString(),
+            ),
       );
     }
   }
