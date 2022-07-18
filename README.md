@@ -43,7 +43,63 @@ print(addedOrFailure.fold((left) {
 (right) {
 // The added number
 }));
+
+
+To add a cfinal mediator = Mediator(Pipeline(),errorHandler:_errorHandler );
+
+
+MyFailure? _errorHandler(Exception e){
+  if(e is CustomException){
+    return MyFailure('message');
+  }
+}
+
+class CustomException implements Exception{}
+class MyFailure extends Failure{
+  MyFailure(super.message);
+}
  ```
+ 
+ To add a custom exception handler
+ 
+ ```dart
+final mediator = Mediator(
+  Pipeline(),
+  errorHandler: _errorHandler,
+);
+
+MyFailure? _errorHandler(Exception e) {
+  if (e is CustomException) {
+    return MyFailure('message');
+  }
+}
+
+class CustomException implements Exception {}
+
+class MyFailure extends Failure {
+  MyFailure(super.message);
+}
+
+
+To add a custom behaviour
+
+class LoggingBehaviour extends IPipelineBehaviour {
+  @override
+  Future proccess(IRequest request, RequestHandlerDelegate next) {
+    print(request);
+    return next(request);
+  }
+}
+
+final mediator = Mediator(
+  Pipeline()
+    ..addMiddleware(
+      LoggingBehaviour(),
+    ),
+);
+
+
+```
  
  
  
