@@ -58,8 +58,9 @@ class CustomException implements Exception{}
 class MyFailure extends Failure{
   MyFailure(super.message);
 }
- ```
+```
  
+  
  To add a custom exception handler
  
  ```dart
@@ -79,10 +80,10 @@ class CustomException implements Exception {}
 class MyFailure extends Failure {
   MyFailure(super.message);
 }
-
+```
 
 To add a custom behaviour
-
+```dart
 class LoggingBehaviour extends IPipelineBehaviour {
   @override
   Future proccess(IRequest request, RequestHandlerDelegate next) {
@@ -97,10 +98,5 @@ final mediator = Mediator(
       LoggingBehaviour(),
     ),
 );
-
-
 ```
- 
- 
- 
 
