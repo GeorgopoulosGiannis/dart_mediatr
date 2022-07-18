@@ -44,22 +44,7 @@ print(addedOrFailure.fold((left) {
 // The added number
 }));
 
-
-To add a cfinal mediator = Mediator(Pipeline(),errorHandler:_errorHandler );
-
-
-MyFailure? _errorHandler(Exception e){
-  if(e is CustomException){
-    return MyFailure('message');
-  }
-}
-
-class CustomException implements Exception{}
-class MyFailure extends Failure{
-  MyFailure(super.message);
-}
 ```
- 
   
  To add a custom exception handler
  
