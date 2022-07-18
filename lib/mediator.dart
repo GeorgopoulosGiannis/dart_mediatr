@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mediatr/src/behaviours/i_pipeline_behaviour.dart';
 
 import 'src/internals/failure.dart';
 import 'src/internals/i_domain_event.dart';
