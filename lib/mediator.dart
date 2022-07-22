@@ -20,10 +20,10 @@ export 'src/internals/i_request.dart';
 export 'src/internals/i_request_handler.dart';
 export 'src/internals/pipeline.dart';
 export 'src/internals/failure.dart';
+export 'src/behaviours/i_pipeline_behaviour.dart';
 
 typedef HandlerCreator<T> = T Function();
-typedef FuncEventHandler<T extends IDomainEvent> = FutureOr<void> Function(
-    T event);
+typedef FuncEventHandler<T extends IDomainEvent> = FutureOr<void> Function(T event);
 
 typedef UnsubscribeFunc = void Function();
 typedef RunnerGuard = Failure Function(dynamic Function());
@@ -47,8 +47,7 @@ class Mediator {
     this.errorHandler,
   });
 
-  UnsubscribeFunc subscribeWithFunc<E extends IDomainEvent>(
-      FutureOr<void> Function(IDomainEvent event) func) {
+  UnsubscribeFunc subscribeWithFunc<E extends IDomainEvent>(FutureOr<void> Function(IDomainEvent event) func) {
     if (eventFuncHandler[E] == null) {
       eventFuncHandler[E] = [];
     }
@@ -111,17 +110,13 @@ class Mediator {
   /// [R] is the return type of the request handler
   /// [IR] is the [IRequest] type
   /// [H] is the type of the [IRequestHandler], the return type of the [creator]
-  void registerHandler<R, IR extends IRequest<R>,
-      H extends IRequestHandler<R, IR>>(HandlerCreator<H> creator) {
+  void registerHandler<R, IR extends IRequest<R>, H extends IRequestHandler<R, IR>>(HandlerCreator<H> creator) {
     handlers[IR] = creator;
   }
 
-  IRequestHandler? _getRequestHandlerFor<T extends IRequest>() =>
-      handlers[T]?.call();
+  IRequestHandler? _getRequestHandlerFor<T extends IRequest>() => handlers[T]?.call();
 
-  List<IEventHandler> _getEventHandlersFor<E extends IDomainEvent>() =>
-      eventHandlers[E] ?? [];
+  List<IEventHandler> _getEventHandlersFor<E extends IDomainEvent>() => eventHandlers[E] ?? [];
 
-  List<FuncEventHandler> _getFuncHandlersFor<E extends IDomainEvent>() =>
-      eventFuncHandler[E] ?? [];
+  List<FuncEventHandler> _getFuncHandlersFor<E extends IDomainEvent>() => eventFuncHandler[E] ?? [];
 }
