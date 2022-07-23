@@ -27,7 +27,7 @@ typedef FuncEventHandler<T extends IDomainEvent> = FutureOr<void> Function(T eve
 
 typedef UnsubscribeFunc = void Function();
 typedef RunnerGuard = Failure Function(dynamic Function());
-typedef ErrorHandler = Failure? Function(Exception e);
+typedef ErrorHandler = FutureOr<Failure?> Function(Exception e);
 
 class Mediator {
   final Pipeline pipeline;
@@ -97,7 +97,7 @@ class Mediator {
       return Right(result);
     } on Exception catch (e) {
       return Left(
-        errorHandler?.call(e) ??
+        await errorHandler?.call(e) ??
             RequestFailure(
               e.toString(),
               request.toString(),
