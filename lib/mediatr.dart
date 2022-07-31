@@ -30,7 +30,12 @@ typedef RunnerGuard = Failure Function(dynamic Function());
 typedef ErrorHandler = FutureOr<Failure?> Function(Exception e);
 
 class Mediator {
+  /// Add pipeline behaviours that will be called with each request send through
+  /// the mediator instance.
   final Pipeline pipeline;
+
+  /// Add a customer error handle that will be called when a send request fails
+  /// with the exception. (Not required)
   final ErrorHandler? errorHandler;
 
   @visibleForTesting
@@ -47,6 +52,8 @@ class Mediator {
     this.errorHandler,
   });
 
+  /// Called subscribe with func to register to IDomainEvents with a function that will receive the event.
+  /// You can add as many subscribers as you want.
   UnsubscribeFunc subscribeWithFunc<E extends IDomainEvent>(FutureOr<void> Function(IDomainEvent event) func) {
     if (eventFuncHandler[E] == null) {
       eventFuncHandler[E] = [];
@@ -57,6 +64,8 @@ class Mediator {
     };
   }
 
+  /// Call subscribe to register to IDomainEvents with a class That implements IEventHandler
+  /// if you do not wish to register with a function.
   void subscribe<E extends IDomainEvent>(IEventHandler<E> handler) {
     if (eventHandlers[E] == null) {
       eventHandlers[E] = [];
@@ -64,10 +73,12 @@ class Mediator {
     eventHandlers[E]?.add(handler);
   }
 
+  /// Unsubscribes a class from the given Event
   void unsubscribe<E extends IDomainEvent>(IEventHandler<E> handler) {
     eventHandlers[E]?.remove(handler);
   }
 
+  /// Publishes an event to both function and class subscribers.
   Future<void> publish<E extends IDomainEvent>(E event) async {
     // reverse loops to avoid concurrent modification of list
     // if event handler gets removed while looping.
@@ -85,6 +96,7 @@ class Mediator {
     }
   }
 
+  /// Sends a request to the given handlers after passing it through all middleware.
   Future<Either<Failure, R>> send<R extends Object?, T extends IRequest<R>>(
     T request,
   ) async {
