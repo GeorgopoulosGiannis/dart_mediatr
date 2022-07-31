@@ -5,3 +5,7 @@
 
 ## 0.0.9
 * Change error handler to be async
+
+
+## 0.0.10
+* Added example
