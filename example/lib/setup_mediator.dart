@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:example/get_items_query.dart';
-import 'package:example/items_repository.dart';
+import 'get_items_query.dart';
+import 'items_repository.dart';
 import 'package:mediatr/mediatr.dart';
 
 import 'add_item_command.dart';

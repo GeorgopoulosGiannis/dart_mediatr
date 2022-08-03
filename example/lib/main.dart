@@ -1,7 +1,8 @@
-import 'package:example/add_item_command.dart';
-import 'package:example/get_items_query.dart';
-import 'package:example/setup_mediator.dart';
 import 'package:flutter/material.dart';
+
+import 'add_item_command.dart';
+import 'get_items_query.dart';
+import 'setup_mediator.dart';
 
 void main() {
   runApp(const MyApp());

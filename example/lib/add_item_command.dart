@@ -1,5 +1,6 @@
-import 'package:example/items_repository.dart';
 import 'package:mediatr/mediatr.dart';
+
+import 'items_repository.dart';
 
 class AddItemCommand extends ICommand {
   final String item;

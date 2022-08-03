@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mediatr/mediatr.dart';
 
@@ -17,7 +16,7 @@ class TestEvent2 extends IDomainEvent {
 class MockPipeline extends Mock implements Pipeline {}
 
 class ConnectivityHandler extends IEventHandler<TestEvent1> {
-  final VoidCallback onCall;
+  final void Function() onCall;
 
   ConnectivityHandler(this.onCall);
   @override
@@ -43,7 +42,7 @@ class DemoRequestHandler extends IRequestHandler<bool, DemoRequest> {
 }
 
 class RecordChangedEventHandler extends IEventHandler<TestEvent2> {
-  final VoidCallback onCall;
+  final void Function() onCall;
 
   RecordChangedEventHandler(this.onCall);
   @override

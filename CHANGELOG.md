@@ -16,3 +16,6 @@
 
 ## 0.0.12
 * Fix analysis errors
+
+## 0.013
+* Convert to pure dart package

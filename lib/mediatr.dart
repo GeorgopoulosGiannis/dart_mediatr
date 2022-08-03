@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:either_dart/either.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'src/internals/failure.dart';
 import 'src/internals/i_domain_event.dart';
@@ -40,13 +39,10 @@ class Mediator {
   /// with the exception. (Not required)
   final ErrorHandler? errorHandler;
 
-  @visibleForTesting
   final handlers = <Type, HandlerCreator>{};
 
-  @visibleForTesting
   final eventHandlers = <Type, List<IEventHandler>>{};
 
-  @visibleForTesting
   final eventFuncHandler = <Type, List<FuncEventHandler>>{};
 
   Mediator(
