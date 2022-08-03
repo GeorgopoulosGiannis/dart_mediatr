@@ -80,7 +80,7 @@ mediator.publish<MyEvent>(MyEvent());
 ## Subscribe on events with functions
 ```dart
 /// subscribe on mediator instance
-var unsubsribeFunc = mediator.subscribeWithFunc<MyEvent>((event){
+var unsubscribeFunc = mediator.subscribeWithFunc<MyEvent>((event){
  print(event.name);
 });
 
