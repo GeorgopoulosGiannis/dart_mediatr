@@ -62,15 +62,20 @@ class MyFailure extends Failure {
 }
 
 ```
-## Subscribe on events with functions
+
+## Publishing events
 ```dart
- /// create an event extending IDomainEvent
- 
- class MyEvent extends IDomainEvent {
+/// create an event extending IDomainEvent
+class MyEvent extends IDomainEvent {
   @override
   String get name => 'MyEvent';
- }
+}
 
+mediator.publish<MyEvent>(MyEvent());
+```
+
+## Subscribe on events with functions
+```dart
 /// subscribe on mediator instance
 var unsubsribeFunc = mediator.subscribeWithFunc<MyEvent>((event){
  print(event.name);
