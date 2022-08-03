@@ -63,7 +63,8 @@ void main() {
     () {
       registerFallbackValue(DemoRequest(duration));
       mockPipeline = MockPipeline();
-      when(() => mockPipeline.passThrough(DemoRequest(duration), DemoRequestHandler())).thenAnswer(
+      when(() => mockPipeline.passThrough(
+          DemoRequest(duration), DemoRequestHandler())).thenAnswer(
         (_) async => true,
       );
 
@@ -300,7 +301,8 @@ void main() {
             () => handler,
           );
           final request = DemoRequest(duration);
-          when(() => mockPipeline.passThrough(request, handler)).thenAnswer((_) async => true);
+          when(() => mockPipeline.passThrough(request, handler))
+              .thenAnswer((_) async => true);
           await mediator.send<bool, DemoRequest>(request);
 
           verify(() => mockPipeline.passThrough(request, handler)).called(1);
@@ -314,8 +316,10 @@ void main() {
             () => handler,
           );
           final request = DemoRequest(duration);
-          when(() => mockPipeline.passThrough(request, handler)).thenAnswer((_) async => true);
-          final resultOrFailure = await mediator.send<bool, DemoRequest>(request);
+          when(() => mockPipeline.passThrough(request, handler))
+              .thenAnswer((_) async => true);
+          final resultOrFailure =
+              await mediator.send<bool, DemoRequest>(request);
           expect(resultOrFailure.isRight, true);
           final result = resultOrFailure.fold((l) => l, (r) => r);
           expect(result, true);
@@ -331,9 +335,11 @@ void main() {
             () => handler,
           );
           final request = DemoRequest(duration);
-          when(() => mockPipeline.passThrough(request, handler)).thenThrow(Exception('error'));
+          when(() => mockPipeline.passThrough(request, handler))
+              .thenThrow(Exception('error'));
 
-          final resultOrFailure = await mediator.send<bool, DemoRequest>(request);
+          final resultOrFailure =
+              await mediator.send<bool, DemoRequest>(request);
 
           expect(resultOrFailure.isLeft, true);
           final result = resultOrFailure.fold(

@@ -9,3 +9,6 @@
 
 ## 0.0.10
 * Added example
+
+## 0.0.11
+* Update 

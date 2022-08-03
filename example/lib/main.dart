@@ -46,7 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
       error = null;
     });
 
-    final addedOrFailure = await mediator.send<void, AddItemCommand>(AddItemCommand(itemToAdd));
+    final addedOrFailure =
+        await mediator.send<void, AddItemCommand>(AddItemCommand(itemToAdd));
     addedOrFailure.fold(
       (left) {
         print("Failed to add item");
@@ -63,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> getItems() async {
-    final itemsOrFailure = await mediator.send<List<String>, GetItemsQuery>(GetItemsQuery());
+    final itemsOrFailure =
+        await mediator.send<List<String>, GetItemsQuery>(GetItemsQuery());
     itemsOrFailure.fold(
       (left) {
         print('Failed to get items');

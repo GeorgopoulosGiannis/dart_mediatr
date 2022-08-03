@@ -3,7 +3,8 @@ import 'package:mediatr/mediatr.dart';
 
 class GetItemsQuery extends IQuery<List<String>> {}
 
-class GetItemsQueryHandler extends IRequestHandler<List<String>, GetItemsQuery> {
+class GetItemsQueryHandler
+    extends IRequestHandler<List<String>, GetItemsQuery> {
   final ItemsRepository itemsRepository;
 
   GetItemsQueryHandler(this.itemsRepository);
