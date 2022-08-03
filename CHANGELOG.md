@@ -19,3 +19,6 @@
 
 ## 0.0.13
 * Convert to pure dart package
+
+## 0.0.14
+* Replace flutter_test, and flutter_lints with dart packages.
