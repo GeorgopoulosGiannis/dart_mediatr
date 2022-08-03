@@ -1,5 +1,8 @@
 # Dart mediator package
 
+Pure dart package.
+No dependencies in flutter can be run both in flutter and dart API's.
+
 Inspired by https://github.com/jbogard/MediatR
 
 
