@@ -12,3 +12,7 @@
 
 ## 0.0.11
 * Update 
+
+
+## 0.0.12
+* Fix analysis errors

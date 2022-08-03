@@ -142,9 +142,6 @@ void main() {
       group(
         'Subscribe with class',
         () {
-          late ConnectivityHandler connectivityHandler;
-          late RecordChangedEventHandler recordChangedEventHandler;
-
           test(
             'Should not call irrellevant handlers',
             () async {
@@ -207,8 +204,6 @@ void main() {
       group(
         'Calls both func and class handlers',
         () {
-          late ConnectivityHandler connectivityHandler;
-
           test(
             'Should call both class and func handlers for event',
             () async {
@@ -241,7 +236,6 @@ void main() {
       group(
         'Unsubsribe',
         () {
-          late ConnectivityHandler connectivityHandler;
           test(
             'Should remove event handler',
             () async {

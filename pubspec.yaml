@@ -1,6 +1,6 @@
 name: mediatr
 description: Dart mediatr package. Central mediator that allows sending requests, and publishing events.
-version: 0.0.11
+version: 0.0.12
 homepage: https://github.com/GeorgopoulosGiannis/dart_mediatr
 
 environment:
