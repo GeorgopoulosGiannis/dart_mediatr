@@ -1,5 +1,8 @@
 # Dart mediator package
 
+Pure dart package.
+No dependencies in flutter can be run both in flutter and dart API's.
+
 Inspired by https://github.com/jbogard/MediatR
 
 
@@ -77,7 +80,7 @@ mediator.publish<MyEvent>(MyEvent());
 ## Subscribe on events with functions
 ```dart
 /// subscribe on mediator instance
-var unsubsribeFunc = mediator.subscribeWithFunc<MyEvent>((event){
+var unsubscribeFunc = mediator.subscribeWithFunc<MyEvent>((event){
  print(event.name);
 });
 
