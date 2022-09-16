@@ -22,3 +22,7 @@
 
 ## 0.0.14
 * Replace flutter_test, and flutter_lints with dart packages.
+
+
+## 0.1.0
+* Add dependabot, update either_dart package.
