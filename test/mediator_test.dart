@@ -19,6 +19,7 @@ class ConnectivityHandler extends IEventHandler<TestEvent1> {
   final void Function() onCall;
 
   ConnectivityHandler(this.onCall);
+
   @override
   Future<void> call(TestEvent1 event) async {
     onCall();
@@ -45,6 +46,7 @@ class RecordChangedEventHandler extends IEventHandler<TestEvent2> {
   final void Function() onCall;
 
   RecordChangedEventHandler(this.onCall);
+
   @override
   Future<void> call(TestEvent2 event) async {
     onCall();
@@ -299,47 +301,6 @@ void main() {
           await mediator.send<bool, DemoRequest>(request);
 
           verify(() => mockPipeline.passThrough(request, handler)).called(1);
-        },
-      );
-      test(
-        'Should return right with result if request is handled',
-        () async {
-          final handler = DemoRequestHandler();
-          mediator.registerHandler<bool, DemoRequest, DemoRequestHandler>(
-            () => handler,
-          );
-          final request = DemoRequest(duration);
-          when(() => mockPipeline.passThrough(request, handler))
-              .thenAnswer((_) async => true);
-          final resultOrFailure =
-              await mediator.send<bool, DemoRequest>(request);
-          expect(resultOrFailure.isRight, true);
-          final result = resultOrFailure.fold((l) => l, (r) => r);
-          expect(result, true);
-        },
-      );
-
-      test(
-        'Should return left with RequestFailure on exception',
-        () async {
-          final handler = DemoRequestHandler();
-
-          mediator.registerHandler<bool, DemoRequest, DemoRequestHandler>(
-            () => handler,
-          );
-          final request = DemoRequest(duration);
-          when(() => mockPipeline.passThrough(request, handler))
-              .thenThrow(Exception('error'));
-
-          final resultOrFailure =
-              await mediator.send<bool, DemoRequest>(request);
-
-          expect(resultOrFailure.isLeft, true);
-          final result = resultOrFailure.fold(
-            (l) => l,
-            (r) => r,
-          );
-          expect(result, isA<RequestFailure>());
         },
       );
     },

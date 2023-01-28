@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:either_dart/either.dart';
-
 import 'src/internals/failure.dart';
 import 'src/internals/i_domain_event.dart';
 import 'src/internals/i_event_handler.dart';
@@ -96,25 +94,15 @@ class Mediator {
   }
 
   /// Sends a request to the given handlers after passing it through all middleware.
-  Future<Either<Failure, R>> send<R extends Object?, T extends IRequest<R>>(
+  Future<R> send<R extends Object?, T extends IRequest<R>>(
     T request,
   ) async {
     final handler = _getRequestHandlerFor<T>();
     if (handler == null) {
       throw Exception('Unknown handler ${T.toString()}');
     }
-    try {
-      final result = await pipeline.passThrough(request, handler);
-      return Right(result);
-    } on Exception catch (e) {
-      return Left(
-        await errorHandler?.call(e) ??
-            RequestFailure(
-              e.toString(),
-              request.toString(),
-            ),
-      );
-    }
+
+    return await pipeline.passThrough(request, handler);
   }
 
   /// [creator] should be a function that creates a [IRequestHandler]
