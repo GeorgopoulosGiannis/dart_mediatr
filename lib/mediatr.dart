@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'src/internals/failure.dart';
 import 'src/internals/i_domain_event.dart';
 import 'src/internals/i_event_handler.dart';
 import 'src/internals/i_request.dart';
@@ -16,7 +15,6 @@ export 'src/internals/i_query.dart';
 export 'src/internals/i_request.dart';
 export 'src/internals/i_request_handler.dart';
 export 'src/internals/pipeline.dart';
-export 'src/internals/failure.dart';
 export 'src/behaviours/i_pipeline_behaviour.dart';
 
 typedef HandlerCreator<T> = T Function();
@@ -24,8 +22,6 @@ typedef FuncEventHandler<T extends IDomainEvent> = FutureOr<void> Function(
     T event);
 
 typedef UnsubscribeFunc = void Function();
-typedef RunnerGuard = Failure Function(dynamic Function());
-typedef ErrorHandler = FutureOr<Failure?> Function(Exception e);
 
 /// Core mediator
 class Mediator {
@@ -33,20 +29,13 @@ class Mediator {
   /// the mediator instance.
   final Pipeline pipeline;
 
-  /// Add a customer error handle that will be called when a send request fails
-  /// with the exception. (Not required)
-  final ErrorHandler? errorHandler;
-
   final handlers = <Type, HandlerCreator>{};
 
   final eventHandlers = <Type, List<IEventHandler>>{};
 
   final eventFuncHandler = <Type, List<FuncEventHandler>>{};
 
-  Mediator(
-    this.pipeline, {
-    this.errorHandler,
-  });
+  Mediator(this.pipeline);
 
   /// Called subscribe with func to register to IDomainEvents with a function that will receive the event.
   /// You can add as many subscribers as you want.
