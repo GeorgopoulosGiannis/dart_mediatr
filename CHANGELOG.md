@@ -26,3 +26,6 @@
 
 ## 0.1.0
 * Add dependabot, update either_dart package.
+
+## 0.2.0
+* Remove either package 
