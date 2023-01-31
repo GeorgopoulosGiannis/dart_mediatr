@@ -42,27 +42,6 @@ print(addedOrFailure.fold((left) {
 }));
 
 ```
- 
- ## Adding a custom exception handler
-
- ```dart
- 
- MyFailure? _errorHandler(Exception e) {
-  if (e is CustomException) {
-    return MyFailure('message');
-  }
-}
-
-final mediator = Mediator(
-  Pipeline(),
-  errorHandler: _errorHandler,
-);
-
-class CustomException implements Exception {}
-
-class MyFailure extends Failure {
-  MyFailure(super.message);
-}
 
 ```
 
