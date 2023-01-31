@@ -31,15 +31,10 @@ class AddRequestHandler extends IRequestHandler<int, AddRequest> {
         );
 
 /// Send the request througt the mediator instance
-final addedOrFailure = await mediator.send<int, AddRequest>(
+final added = await mediator.send<int, AddRequest>(
           AddRequest(2),
         );
-print(addedOrFailure.fold((left) {
-// an instance of Failure
-},
-(right) {
-// The added number
-}));
+print(added); // prints 3
 
 ```
 
