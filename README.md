@@ -43,8 +43,6 @@ print(addedOrFailure.fold((left) {
 
 ```
 
-```
-
 ## Publishing events
 ```dart
 /// create an event extending IDomainEvent
