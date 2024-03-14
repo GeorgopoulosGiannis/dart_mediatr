@@ -1,8 +1,8 @@
 import 'package:mediatr/mediatr.dart';
 
-class LoggingBehaviour extends IPipelineBehaviour {
+class LoggingBehavior extends IPipelineBehavior {
   @override
-  Future proccess(IRequest request, RequestHandlerDelegate next) {
+  Future process(IRequest request, RequestHandlerDelegate next) {
     print('new request send $request');
     return next(request);
   }

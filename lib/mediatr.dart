@@ -15,7 +15,7 @@ export 'src/internals/i_query.dart';
 export 'src/internals/i_request.dart';
 export 'src/internals/i_request_handler.dart';
 export 'src/internals/pipeline.dart';
-export 'src/behaviours/i_pipeline_behaviour.dart';
+export 'src/behaviors/i_pipeline_behavior.dart';
 
 typedef HandlerCreator<T> = T Function();
 typedef FuncEventHandler<T extends IDomainEvent> = FutureOr<void> Function(
@@ -25,7 +25,7 @@ typedef UnsubscribeFunc = void Function();
 
 /// Core mediator
 class Mediator {
-  /// Add pipeline behaviours that will be called with each request send through
+  /// Add pipeline behaviors that will be called with each request send through
   /// the mediator instance.
   final Pipeline pipeline;
 
@@ -83,7 +83,7 @@ class Mediator {
   }
 
   /// Sends a request to the given handlers after passing it through all middleware.
-  Future<R> send<R extends Object?, T extends IRequest<R>>(
+  Future<R> send<T extends IRequest<R>, R extends Object?>(
     T request,
   ) async {
     final handler = _getRequestHandlerFor<T>();
@@ -98,8 +98,8 @@ class Mediator {
   /// [R] is the return type of the request handler
   /// [IR] is the [IRequest] type
   /// [H] is the type of the [IRequestHandler], the return type of the [creator]
-  void registerHandler<R, IR extends IRequest<R>,
-      H extends IRequestHandler<R, IR>>(HandlerCreator<H> creator) {
+  void registerHandler<IR extends IRequest<R>, R,
+      H extends IRequestHandler<IR, R>>(HandlerCreator<H> creator) {
     handlers[IR] = creator;
   }
 

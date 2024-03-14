@@ -1,17 +1,16 @@
-import '../behaviours/i_pipeline_behaviour.dart';
+import '../behaviors/i_pipeline_behavior.dart';
 import 'i_request.dart';
 import 'i_request_handler.dart';
 
 /// A pipeline passes  an [IRequest] through all of its [middlewares]
 /// before being send to the [IRequestHandler]
 class Pipeline {
-  late final List<IPipelineBehaviour> middlewares = [];
+  late final List<IPipelineBehavior> middlewares = [];
 
   /// Adds a middleware to the [Pipeline]
-  void addMiddleware(IPipelineBehaviour behaviour) =>
-      middlewares.add(behaviour);
+  void addMiddleware(IPipelineBehavior behavior) => middlewares.add(behavior);
 
-  /// The function that gets called from [Mediator] in order to pass the [IRequest] throught the middlewares
+  /// The function that gets called from [Mediator] in order to pass the [IRequest] thought the middlewares
   Future passThrough(
     IRequest request,
     IRequestHandler requestHandler,
@@ -21,7 +20,7 @@ class Pipeline {
         return requestHandler(request);
       }
       final m = middlewares[index];
-      return m.proccess(
+      return m.process(
         request,
         (req) async => runner(index + 1),
       );
