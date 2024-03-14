@@ -17,7 +17,7 @@ Inspired by https://github.com/jbogard/MediatR
 }
 
 /// Create a request handler 
-class AddRequestHandler extends IRequestHandler<int, AddRequest> {
+class AddRequestHandler extends IRequestHandler<AddRequest, int> {
   @override
   Future<int> call(AddRequest request) async {
     return request.i + 1;
@@ -26,12 +26,12 @@ class AddRequestHandler extends IRequestHandler<int, AddRequest> {
 /// Register the handler to the mediator instance ( commonly stored as a singleton )
  final mediator = Mediator(Pipeline());
 
- mediator.registerHandler<int, AddRequest, AddRequestHandler>(
+ mediator.registerHandler<AddRequest, int, AddRequestHandler>(
           () => AddRequestHandler(),
         );
 
-/// Send the request througt the mediator instance
-final added = await mediator.send<int, AddRequest>(
+/// Send the request through the mediator instance
+final added = await mediator.send<AddRequest, int>(
           AddRequest(2),
         );
 print(added); // prints 3
@@ -82,9 +82,9 @@ mediator.unsubscribe<MyEvent>(eventHandler);
  ## Adding a middleware for all requests
  
 ```dart
-class LoggingBehaviour extends IPipelineBehaviour {
+class LoggingBehavior extends IPipelineBehavior {
   @override
-  Future proccess(IRequest request, RequestHandlerDelegate next) {
+  Future process(IRequest request, RequestHandlerDelegate next) {
     print(request);
     return next(request);
   }
@@ -93,7 +93,7 @@ class LoggingBehaviour extends IPipelineBehaviour {
 final mediator = Mediator(
   Pipeline()
     ..addMiddleware(
-      LoggingBehaviour(),
+      LoggingBehavior(),
     ),
 );
 ```

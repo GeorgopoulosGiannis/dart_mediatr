@@ -33,7 +33,7 @@ class DemoRequest extends IRequest<bool> {
   DemoRequest(this.duration);
 }
 
-class DemoRequestHandler extends IRequestHandler<bool, DemoRequest> {
+class DemoRequestHandler extends IRequestHandler<DemoRequest, bool> {
   @override
   Future<bool> call(DemoRequest request) async {
     await Future.delayed(request.duration);
@@ -144,7 +144,7 @@ void main() {
         'Subscribe with class',
         () {
           test(
-            'Should not call irrellevant handlers',
+            'Should not call irrelevant handlers',
             () async {
               /// arrange
               bool called = false;
@@ -235,7 +235,7 @@ void main() {
       );
 
       group(
-        'Unsubsribe',
+        'Unsubscribe',
         () {
           test(
             'Should remove event handler',
@@ -289,16 +289,16 @@ void main() {
     'Send',
     () {
       test(
-        'Should pass through all of pipeline behaviours',
+        'Should pass through all of pipeline behaviors',
         () async {
           final handler = DemoRequestHandler();
-          mediator.registerHandler<bool, DemoRequest, DemoRequestHandler>(
+          mediator.registerHandler<DemoRequest, bool, DemoRequestHandler>(
             () => handler,
           );
           final request = DemoRequest(duration);
           when(() => mockPipeline.passThrough(request, handler))
               .thenAnswer((_) async => true);
-          await mediator.send<bool, DemoRequest>(request);
+          await mediator.send<DemoRequest, bool>(request);
 
           verify(() => mockPipeline.passThrough(request, handler)).called(1);
         },
@@ -313,7 +313,7 @@ class AddRequest extends IRequest<int> {
   AddRequest(this.i);
 }
 
-class AddRequestHandler extends IRequestHandler<int, AddRequest> {
+class AddRequestHandler extends IRequestHandler<AddRequest, int> {
   @override
   Future<int> call(AddRequest request) async {
     return request.i + 1;

@@ -25,7 +25,3 @@ class EmptyItemException implements Exception {
   @override
   String toString() => 'Cannot add empty item';
 }
-
-class EmptyItemFailure extends Failure {
-  EmptyItemFailure(super.message);
-}

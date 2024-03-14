@@ -47,38 +47,30 @@ class _MyHomePageState extends State<MyHomePage> {
       error = null;
     });
 
-    final addedOrFailure =
-        await mediator.send<void, AddItemCommand>(AddItemCommand(itemToAdd));
-    addedOrFailure.fold(
-      (left) {
-        print("Failed to add item");
+    try {
+      await mediator.send<AddItemCommand, void>(AddItemCommand(itemToAdd));
 
-        setState(() {
-          error = left.message;
-        });
-      },
-      (right) {
-        print("Item succesfully added");
-        _controller.clear();
-      },
-    );
+      _controller.clear();
+    } on EmptyItemException {
+      setState(() {
+        error = 'Cannot add empty item';
+      });
+    }
   }
 
   Future<void> getItems() async {
-    final itemsOrFailure =
-        await mediator.send<List<String>, GetItemsQuery>(GetItemsQuery());
-    itemsOrFailure.fold(
-      (left) {
-        print('Failed to get items');
-      },
-      (right) {
-        print('Got items');
+    try {
+      final result =
+          await mediator.send<GetItemsQuery, List<String>>(GetItemsQuery());
 
-        setState(() {
-          items = right;
-        });
-      },
-    );
+      setState(() {
+        items = result;
+      });
+    } on EmptyItemException {
+      setState(() {
+        error = 'Cannot get items';
+      });
+    }
   }
 
   @override
@@ -99,12 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   Flexible(
                     child: ElevatedButton(
                       onPressed: addItem,
-                      child: Text(
+                      child: const Text(
                         'AddItem',
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Flexible(
@@ -113,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onChanged: (val) {
                         print(val);
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter item',
                       ),
@@ -124,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: getItems,
-              child: Text(
+              child: const Text(
                 'GetItems',
               ),
             ),
@@ -132,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Center(
                 child: Text(
                   error!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                   ),
                 ),
@@ -140,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Center(
               child: Text(
                 'Items',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
             Flexible(

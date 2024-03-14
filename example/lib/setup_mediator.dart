@@ -1,36 +1,27 @@
-import 'dart:async';
-
 import 'get_items_query.dart';
 import 'items_repository.dart';
 import 'package:mediatr/mediatr.dart';
 
 import 'add_item_command.dart';
-import 'logging_behaviour.dart';
+import 'logging_behavior.dart';
 
 Mediator setupMediator() {
   final repo = ItemsRepository();
 
-  final pipeline = Pipeline()..addMiddleware(LoggingBehaviour());
-  final mediator = Mediator(pipeline, errorHandler: _customErrorHandler);
+  final pipeline = Pipeline()..addMiddleware(LoggingBehavior());
+  final mediator = Mediator(pipeline);
 
-  mediator.registerHandler<void, AddItemCommand, AddItemCommandHandler>(
+  mediator.registerHandler<AddItemCommand, void, AddItemCommandHandler>(
     () => AddItemCommandHandler(
       repo,
     ),
   );
 
-  mediator.registerHandler<List<String>, GetItemsQuery, GetItemsQueryHandler>(
+  mediator.registerHandler<GetItemsQuery, List<String>, GetItemsQueryHandler>(
     () => GetItemsQueryHandler(
       repo,
     ),
   );
 
   return mediator;
-}
-
-FutureOr<Failure?> _customErrorHandler(Exception e) {
-  if (e is EmptyItemException) {
-    return EmptyItemFailure(e.toString());
-  }
-  return null;
 }
