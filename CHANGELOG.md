@@ -29,3 +29,9 @@
 
 ## 0.2.0
 * Remove either package 
+
+## 0.2.1
+* remove either_dart from dependencies by @bytes7bytes7 in https://github.com/GeorgopoulosGiannis/dart_mediatr/pull/3
+* fixed typo and generic type parameter position to match original MediatR by @smjxpro in https://github.com/GeorgopoulosGiannis/dart_mediatr/pull/7
+* add publish workflow by @GeorgopoulosGiannis in https://github.com/GeorgopoulosGiannis/dart_mediatr/pull/8
+* Added flutter pub get by @GeorgopoulosGiannis in https://github.com/GeorgopoulosGiannis/dart_mediatr/pull/9
